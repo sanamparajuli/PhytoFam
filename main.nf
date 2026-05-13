@@ -140,6 +140,6 @@ workflow {
 
 workflow.onComplete {
     log.info ( workflow.success
-        ? "\n✅  Pipeline complete! Results: ${params.outdir}"
-        : "\n❌  Pipeline failed. Check logs above." )
+        ? "\n Pipeline complete! Results: ${params.outdir}"
+        : "\n Pipeline failed. Check logs above." )
 }
