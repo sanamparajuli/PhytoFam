@@ -16,7 +16,7 @@ process INTERPROSCAN {
 
     script:
     """
-    # InterProScan does not accept stop-codon asterisks
+    #InterProScan does not accept stop-codon asterisks
     sed 's/\*//g' ${candidates_fasta} > candidates_clean.fasta
 
     interproscan.sh \
