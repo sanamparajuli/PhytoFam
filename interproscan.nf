@@ -17,7 +17,7 @@ process INTERPROSCAN {
     script:
     """
     #InterProScan does not accept stop-codon asterisks
-    sed 's/\*//g' ${candidates_fasta} > candidates_clean.fasta
+    sed 's/\[*]//g' ${candidates_fasta} > candidates_clean.fasta
 
     interproscan.sh \
         --input        candidates_clean.fasta \
@@ -73,7 +73,7 @@ process CONFIRM_CANDIDATES {
     seq_domains = defaultdict(set)
     with open("${iprscan_tsv}") as fh:
         for line in fh:
-            cols = line.rstrip("\n").split("\t")
+            cols = line.rstrip("\\n").split("\\t")
             if len(cols) < 5:
                 continue
             seq_id   = cols[0]
@@ -96,10 +96,10 @@ process CONFIRM_CANDIDATES {
         rows.append((sid, ";".join(sorted(found)) or "none", status))
 
     with open("confirmed_ids.txt", "w") as out:
-        out.write("\n".join(confirmed) + ("\n" if confirmed else ""))
+        out.write("\\n".join(confirmed) + ("\\n" if confirmed else ""))
 
     with open("rejected_ids.txt", "w") as out:
-        out.write("\n".join(rejected) + ("\n" if rejected else ""))
+        out.write("\\n".join(rejected) + ("\\n" if rejected else ""))
 
     with open("domain_confirmation_summary.tsv", "w") as out:
         out.write("seq_id\tmatched_domains\tstatus\n")
