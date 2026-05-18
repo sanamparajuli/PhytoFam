@@ -15,6 +15,7 @@ process INTERPROSCAN {
     path "interproscan_results.gff3", emit: gff3
 
     script:
+    def db_flag = params.interpro_db ? "--data-dir ${params.interpro_db}" : ""
     """
     #InterProScan does not accept stop-codon asterisks
     sed 's/\[*]//g' ${candidates_fasta} > candidates_clean.fasta
@@ -28,7 +29,7 @@ process INTERPROSCAN {
         --goterms \
         --iprlookup \
         --pathways \
-        ${params.interpro_db ? "--data-dir ${params.interpro_db}" : ""} \
+        ${db_flag} \
         --outfile-base interproscan_results
 
     # Normalize output filenames (IPS naming varies by version)
@@ -57,7 +58,7 @@ process CONFIRM_CANDIDATES {
 
     script:
     """
-    #!/usr/bin/env python3
+    python3 << 'PYEOF'
     import sys
     from collections import defaultdict
 
@@ -104,8 +105,9 @@ process CONFIRM_CANDIDATES {
     with open("domain_confirmation_summary.tsv", "w") as out:
         out.write("seq_id\tmatched_domains\tstatus\n")
         for r in rows:
-            out.write("\t".join(r) + "\n")
+            out.write("\\t".join(r) + "\\n")
 
     print(f"InterProScan: {len(confirmed)} confirmed, {len(rejected)} rejected", file=sys.stderr)
+PYEOF
     """
 }
