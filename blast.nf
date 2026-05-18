@@ -95,7 +95,7 @@ process RBH_ORTHOLOGY {
 
     script:
     """
-    #!/usr/bin/env python3
+    python3 << 'PYEOF'
     import sys
     from collections import defaultdict
 
@@ -217,5 +217,6 @@ process RBH_ORTHOLOGY {
           f"{type_counts['PUTATIVE_HOMOLOG']} putative, "
           f"{type_counts['NO_BLAST_HIT']} no-hit — all {len(all_ids)} proceed",
           file=sys.stderr)
-    """
+PYEOF    
+"""
 }
