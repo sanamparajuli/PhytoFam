@@ -17,43 +17,45 @@ process EXTRACT_SEQUENCES {
 
     script:
     """
-    #!/usr/bin/env python3
-    import sys
+    python3 << 'PYEOF'
+import sys
 
-    with open("${id_list}") as fh:
-        target_ids = set(line.strip() for line in fh if line.strip())
+with open("${id_list}") as fh:
+    target_ids = set(line.strip() for line in fh if line.strip())
 
-    found     = set()
-    not_found = set(target_ids)
-    writing   = False
+found     = set()
+not_found = set(target_ids)
+writing   = False
 
-    with open("${proteome}") as fh, \
-         open("${label}.fasta", "w") as out:
-        for line in fh:
-            if line.startswith(">"):
-                seq_id  = line[1:].split()[0]
-                writing = seq_id in target_ids
-                if writing:
-                    found.add(seq_id)
-                    not_found.discard(seq_id)
-                    out.write(line)
-            elif writing:
+with open("${proteome}") as fh, \\
+     open("${label}.fasta", "w") as out:
+    for line in fh:
+        if line.startswith(">"):
+            seq_id  = line[1:].split()[0]
+            writing = seq_id in target_ids
+            if writing:
+                found.add(seq_id)
+                not_found.discard(seq_id)
                 out.write(line)
+        elif writing:
+            out.write(line)
 
-    with open("${label}_not_found.txt", "w") as out:
-        for sid in sorted(not_found):
-            out.write(sid + "\n")
+with open("${label}_not_found.txt", "w") as out:
+    for sid in sorted(not_found):
+        out.write(sid + "\\n")
 
-    if not_found:
-        print(f"WARNING: {len(not_found)} IDs not found in proteome", file=sys.stderr)
-        for sid in sorted(not_found):
-            print(f"  Missing: {sid}", file=sys.stderr)
+if not_found:
+    print(f"WARNING: {len(not_found)} IDs not found in proteome", file=sys.stderr)
+    for sid in sorted(not_found):
+        print(f"  Missing: {sid}", file=sys.stderr)
 
-    print(f"Extracted {len(found)}/{len(target_ids)} sequences for '{label}'", file=sys.stderr)
+print(f"Extracted {len(found)}/{len(target_ids)} sequences for '{label}'",
+      file=sys.stderr)
 
-    if len(found) == 0:
-        print("ERROR: No sequences extracted. Check ID format.", file=sys.stderr)
-        sys.exit(1)
+if len(found) == 0:
+    print("ERROR: No sequences extracted. Check ID format.", file=sys.stderr)
+    sys.exit(1)
+PYEOF
     """
 }
 
@@ -75,9 +77,9 @@ process SUMMARY_REPORT {
 
     script:
     """
-    #!/usr/bin/env python3
-    import os
-    from datetime import datetime
+    python3 << 'PYEOF'
+import os
+from datetime import datetime
 
     def count_lines(filepath):
         try:
@@ -102,7 +104,7 @@ process SUMMARY_REPORT {
 
     with open("final_gene_ids.txt", "w") as out:
         for sid in sorted(final_set):
-            out.write(sid + "\n")
+            out.write(sid + "\\n")
 
     def pct(a, b):
         return f"{a/b*100:.1f}%" if b > 0 else "N/A"
@@ -130,5 +132,6 @@ process SUMMARY_REPORT {
         out.write("=" * 60 + "\n")
 
     print("Pipeline complete. See pipeline_summary.txt")
+PYEOF    
     """
 }
