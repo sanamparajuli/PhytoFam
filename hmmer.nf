@@ -55,7 +55,7 @@ process FILTER_HMMER {
 
     script:
     """
-    #!/usr/bin/env python3
+    python3 << 'PYEOF'
     import sys
     import re
 
@@ -165,5 +165,6 @@ process FILTER_HMMER {
 
     print(f"HMMER: {n_before} hits → {n_after} unique genes "
           f"({n_removed} isoforms removed)", file=sys.stderr)
-    """
+PYEOF   
+"""
 }
