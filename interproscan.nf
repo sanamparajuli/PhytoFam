@@ -77,7 +77,6 @@ with open("${hmmer_ids}") as fh:
 seq_domains = defaultdict(set)
 with open("${iprscan_tsv}") as fh:
     for line in fh:
-        # FIX: \\n and \\t — Groovy converts \\ to \, so Python sees \n / \t
         cols = line.rstrip("\\n").split("\\t")
         if len(cols) < 5:
             continue
