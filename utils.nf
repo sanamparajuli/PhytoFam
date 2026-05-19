@@ -143,6 +143,6 @@ with open("pipeline_summary.txt", "w") as out:
     print("=" * 60, file=out)
 
 print("Pipeline complete. See pipeline_summary.txt")
-    PYEOF
+PYEOF
     """
 }
