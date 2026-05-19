@@ -18,19 +18,16 @@ process INTERPROSCAN {
     def db_flag = params.interpro_db ? "--data-dir ${params.interpro_db}" : ""
     """
     sed 's/[*]//g' ${candidates_fasta} > candidates_clean.fasta
-    IPS_BIN="${params.interproscan_bin ?: 'interproscan.sh'}"
 
-    ${IPS_BIN} \\
+    interproscan.sh \\
         --input        candidates_clean.fasta \\
-        --output-dir   . \\
         --formats      TSV,XML,GFF3 \\
         --cpu          ${task.cpus} \\
         --applications Pfam,PANTHER,Gene3D,SUPERFAMILY,PRINTS,ProSiteProfiles \\
         --goterms \\
         --iprlookup \\
         --pathways \\
-        ${db_flag} \\
-        --outfile-base interproscan_results
+        --output-file-base interproscan_results
 
     for ext in tsv xml gff3; do
         if ! [ -f "interproscan_results.\${ext}" ]; then
