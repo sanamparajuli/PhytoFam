@@ -54,8 +54,8 @@ process FILTER_HMMER {
     """
     python3 << 'PYEOF'
 domtblout       = '${domtblout}'
-evalue_thresh   = float('${params.hmmer_evalue}')
-coverage_thresh = float('${params.hmmer_coverage}')
+evalue_thresh   = float("${params.hmmer_evalue}")
+coverage_thresh = float("${params.hmmer_coverage}")
 
 import sys
 import re
@@ -90,12 +90,14 @@ with open(domtblout) as fh:
             })
 
 # ── Step 2: isoform deduplication ────────────────────────────────
+# Note: \\. and \\d are doubled so Groovy passes \. and \d to Python
+# Note: \$ is escaped so Groovy passes $ (end anchor) to Python
 ISOFORM_PATTERNS = [
-    r'^(.+)\.[tmMpP]\d+$',      # MAKER/Augustus: g25347.t1, gene.m1
-    r'^(.+)_[TtPpCc]\d+$',      # Maize: GRMZM2G000230_T01, Zm00001_t001
-    r'^(.+)\.[a-zA-Z]+\d+$',    # Letter+digit: gene.CDS1, VIT_00s.t01
-    r'^(.+)\.\d+$',             # Numeric: AT1G01010.1, Os01g.1, XP_123.1
-    r'^(.+)-\d+$',              # Hyphen: gene-001
+    r'^(.+)\\.[tmMpP]\\d+\$',      # MAKER/Augustus: g25347.t1, gene.m1
+    r'^(.+)_[TtPpCc]\\d+\$',       # Maize: GRMZM2G000230_T01, Zm00001_t001
+    r'^(.+)\\.[a-zA-Z]+\\d+\$',    # Letter+digit: gene.CDS1, VIT_00s.t01
+    r'^(.+)\\.\\d+\$',             # Numeric: AT1G01010.1, Os01g.1, XP_123.1
+    r'^(.+)-\\d+\$',               # Hyphen: gene-001
 ]
 
 def get_gene_id(seq_id):
