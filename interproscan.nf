@@ -114,6 +114,6 @@ with open("domain_confirmation_summary.tsv", "w") as out:
 
 print(f"InterProScan: {len(confirmed)} confirmed, {len(rejected)} rejected",
       file=sys.stderr)
-    PYEOF
+PYEOF
     """
 }
