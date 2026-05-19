@@ -158,6 +158,6 @@ with open("hmmer_filter_summary.txt", "w") as out:
 
 print(f"HMMER: {n_before} hits -> {n_after} unique genes "
       f"({n_removed} isoforms removed)", file=sys.stderr)
-    PYEOF
+PYEOF
     """
 }
