@@ -110,7 +110,7 @@ def parse_blast(filepath):
     hits = defaultdict(list)
     with open(filepath) as fh:
         for line in fh:
-            cols = line.strip().split("\\t")
+            cols = line.strip().split(chr(9))
             if len(cols) < 9:
                 continue
             qid      = cols[0]
@@ -173,39 +173,40 @@ for seq_id in all_ids:
 
 with open("all_confirmed_ids.txt", "w") as out:
     for sid in all_ids:
-        out.write(sid + "\\n")
+        print(sid, file=out)
 
 with open("orthology_table.tsv", "w") as out:
-    out.write("seq_id\\torthology_type\\tbest_ref_hit\\t"
-              "fwd_evalue\\tfwd_pident\\tfwd_qcovs\\t"
-              "rev_evalue\\trev_pident\\n")
+    print("seq_id", "orthology_type", "best_ref_hit",
+          "fwd_evalue", "fwd_pident", "fwd_qcovs",
+          "rev_evalue", "rev_pident", sep=chr(9), file=out)
     for row in orthology_rows:
-        out.write("\\t".join(row) + "\\n")
+        print(*row, sep=chr(9), file=out)
 
 with open("rbh_pairs.tsv", "w") as out:
-    out.write("candidate\\treference_hit\\tfwd_evalue\\tfwd_pident\\t"
-              "fwd_qcovs\\trev_evalue\\trev_pident\\n")
+    print("candidate", "reference_hit", "fwd_evalue", "fwd_pident",
+          "fwd_qcovs", "rev_evalue", "rev_pident", sep=chr(9), file=out)
     for row in rbh_pairs:
-        out.write("\\t".join(str(x) for x in row) + "\\n")
+        print(*[str(x) for x in row], sep=chr(9), file=out)
 
 type_counts = defaultdict(int)
 for row in orthology_rows:
     type_counts[row[1]] += 1
 
 with open("rbh_summary.txt", "w") as out:
-    out.write("RBH Orthology Assignment Summary\\n")
-    out.write("=================================\\n")
-    out.write(f"Total sequences (all pass downstream) : {len(all_ids)}\\n")
-    out.write(f"  RBH orthologs                       : {type_counts['RBH_ORTHOLOG']}\\n")
-    out.write(f"  Putative homologs (fwd hit only)    : {type_counts['PUTATIVE_HOMOLOG']}\\n")
-    out.write(f"  No significant BLAST hit            : {type_counts['NO_BLAST_HIT']}\\n")
-    out.write("\\nNote: ALL sequences proceed to alignment/phylogenetics.\\n")
-    out.write("Orthology assignments are annotations only.\\n")
+    print("RBH Orthology Assignment Summary", file=out)
+    print("=================================", file=out)
+    print(f"Total sequences (all pass downstream) : {len(all_ids)}", file=out)
+    print(f"  RBH orthologs                       : {type_counts['RBH_ORTHOLOG']}", file=out)
+    print(f"  Putative homologs (fwd hit only)    : {type_counts['PUTATIVE_HOMOLOG']}", file=out)
+    print(f"  No significant BLAST hit            : {type_counts['NO_BLAST_HIT']}", file=out)
+    print("", file=out)
+    print("Note: ALL sequences proceed to alignment/phylogenetics.", file=out)
+    print("Orthology assignments are annotations only.", file=out)
 
 print(f"Orthology: {type_counts['RBH_ORTHOLOG']} RBH, "
       f"{type_counts['PUTATIVE_HOMOLOG']} putative, "
       f"{type_counts['NO_BLAST_HIT']} no-hit -- all {len(all_ids)} proceed",
       file=sys.stderr)
-PYEOF
+    PYEOF
     """
 }
