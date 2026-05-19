@@ -93,19 +93,20 @@ with open("${domtblout}") as fh:
             })
 
 # ── Step 2: isoform deduplication ────────────────────────────────
+ISOFORM_PATTERNS = [
+    (r'^(.+)\\.[tmMpP]\\d+\$',      'MAKER/Augustus: g25347.t1, gene.m1'),
+    (r'^(.+)_[TtPpCc]\\d+\$',       'Maize: GRMZM2G000230_T01, Zm00001_t001'),
+    (r'^(.+)\\.[a-zA-Z]+\\d+\$',    'Letter+digit: gene.CDS1, VIT_00s.t01'),
+    (r'^(.+)\\.\\d+\$',             'Numeric: AT1G01010.1, Os01g.1, XP_123.1'),
+    (r'^(.+)-\\d+\$',               'Hyphen: gene-001'),
+]
+
 def get_gene_id(seq_id):
-    # g25347.t1, g25347.t2 -> g25347
-    m = re.match(r'^(.+)\\.[a-zA-Z]+\\d+$', seq_id)
-    if m:
-        return m.group(1)
-    # gene.1, gene.2 -> gene
-    m = re.match(r'^(.+)\\.\\d+$', seq_id)
-    if m:
-        return m.group(1)
-    # gene-1, gene-2 -> gene
-    m = re.match(r'^(.+)-\\d+$', seq_id)
-    if m:
-        return m.group(1)
+    clean = re.sub(r'^(?:transcript|gene|protein|mRNA|CDS):', '', seq_id)
+    for pattern, _ in ISOFORM_PATTERNS:
+        m = re.match(pattern, clean)
+        if m:
+            return m.group(1)
     return seq_id
 
 gene_best = {}
