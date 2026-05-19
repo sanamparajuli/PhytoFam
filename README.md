@@ -47,11 +47,11 @@ Proteome (FASTA)
 |---------------|---------------|---------------------------|
 | Nextflow      | ≥ 23.04       | `curl -s get.nextflow.io` |
 | HMMER         | 3.4           | bioconda                  |
-| InterProScan  | 5.67-99.0     | bioconda / manual         |
-| BLAST+        | 2.15.0        | bioconda                  |
-| MUSCLE        | 5.1           | bioconda                  |
-| TrimAl        | 1.4.1         | bioconda                  |
-| IQ-TREE3      | 3.0.0         | bioconda                  |
+| InterProScan  | 5.59_91.0     | bioconda                  |
+| BLAST+        | 2.17.0        | bioconda                  |
+| MUSCLE        | 5.3           | bioconda                  |
+| TrimAl        | 1.5.1         | bioconda                  |
+| IQ-TREE3      | 3.1.2         | bioconda                  |
 | Python        | ≥ 3.10        | conda / system            |
 | Biopython     | ≥ 1.83        | bioconda                  |
 
