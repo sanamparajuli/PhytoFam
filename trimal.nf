@@ -15,11 +15,12 @@ process TRIMAL_TRIM {
     path "trimal_stats.tsv",        emit: stats
 
     script:
-    def trimal_flags = params.trimal_method == "automated1"  ? "-automated1"
-                     : params.trimal_method == "gappyout"    ? "-gappyout"
-                     : params.trimal_method == "strict"      ? "-strict"
-                     : params.trimal_method == "strictplus"  ? "-strictplus"
-                     : "-automated1"
+    def trimal_flags = params.trimal_method == "automated1" ? "-automated1"
+                 : params.trimal_method == "gappyout"   ? "-gappyout"
+                 : params.trimal_method == "strict"     ? "-strict"
+                 : params.trimal_method == "strictplus" ? "-strictplus"
+                 : params.trimal_method == "manual"     ? "-gt ${params.trimal_gt ?: 0.2} -cons ${params.trimal_cons ?: 20}"
+                 : "-automated1"
 
     // FIX: \\n and \\t in Python strings inside the Nextflow """ block.
     //      escape sequences need doubling because Groovy processes
