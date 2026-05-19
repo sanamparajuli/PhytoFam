@@ -90,8 +90,6 @@ with open(domtblout) as fh:
             })
 
 # ── Step 2: isoform deduplication ────────────────────────────────
-# Note: \\. and \\d are doubled so Groovy passes \. and \d to Python
-# Note: \$ is escaped so Groovy passes $ (end anchor) to Python
 ISOFORM_PATTERNS = [
     r'^(.+)\\.[tmMpP]\\d+\$',      # MAKER/Augustus: g25347.t1, gene.m1
     r'^(.+)_[TtPpCc]\\d+\$',       # Maize: GRMZM2G000230_T01, Zm00001_t001
