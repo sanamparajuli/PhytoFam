@@ -77,7 +77,7 @@ with open(hmmer_ids_file) as fh:
 seq_domains = defaultdict(set)
 with open(iprscan_tsv) as fh:
     for line in fh:
-        cols = line.rstrip("\\n").split("\\t")
+        cols = line.rstrip(chr(10)).split(chr(9))
         if len(cols) < 5:
             continue
         seq_id   = cols[0]
@@ -100,18 +100,20 @@ for sid in sorted(hmmer_ids):
     rows.append((sid, ";".join(sorted(found)) or "none", status))
 
 with open("confirmed_ids.txt", "w") as out:
-    out.write("\\n".join(confirmed) + ("\\n" if confirmed else ""))
+    for sid in confirmed:
+        print(sid, file=out)
 
 with open("rejected_ids.txt", "w") as out:
-    out.write("\\n".join(rejected) + ("\\n" if rejected else ""))
+    for sid in rejected:
+        print(sid, file=out)
 
 with open("domain_confirmation_summary.tsv", "w") as out:
-    out.write("seq_id\\tmatched_domains\\tstatus\\n")
+    print("seq_id", "matched_domains", "status", sep=chr(9), file=out)
     for r in rows:
-        out.write("\\t".join(r) + "\\n")
+        print(*r, sep=chr(9), file=out)
 
 print(f"InterProScan: {len(confirmed)} confirmed, {len(rejected)} rejected",
       file=sys.stderr)
-PYEOF
+    PYEOF
     """
 }
