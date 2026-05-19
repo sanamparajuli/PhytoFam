@@ -91,11 +91,11 @@ with open(domtblout) as fh:
 
 # ── Step 2: isoform deduplication ────────────────────────────────
 ISOFORM_PATTERNS = [
-    r'^(.+)\\.[tmMpP]\\d+\$',      # MAKER/Augustus: g25347.t1, gene.m1
-    r'^(.+)_[TtPpCc]\\d+\$',       # Maize: GRMZM2G000230_T01, Zm00001_t001
-    r'^(.+)\\.[a-zA-Z]+\\d+\$',    # Letter+digit: gene.CDS1, VIT_00s.t01
-    r'^(.+)\\.\\d+\$',             # Numeric: AT1G01010.1, Os01g.1, XP_123.1
-    r'^(.+)-\\d+\$',               # Hyphen: gene-001
+    r'^(.+)\\.[tmMpP]\\d+\$',
+    r'^(.+)_[TtPpCc]\\d+\$',
+    r'^(.+)\\.[a-zA-Z]+\\d+\$',
+    r'^(.+)\\.\\d+\$',
+    r'^(.+)-\\d+\$',
 ]
 
 def get_gene_id(seq_id):
@@ -127,15 +127,17 @@ candidates = {hit['seq_id']: hit for hit in gene_best.values()}
 
 with open("candidate_ids.txt", "w") as out:
     for sid in sorted(candidates):
-        out.write(sid + "\n")
+        print(sid, file=out)
 
 with open("hmmer_filtered.tsv", "w") as out:
-    out.write("seq_id\tgene_id\thmm_name\tseq_evalue\tdom_evalue\tbitscore\thmm_coverage\n")
+    print("seq_id", "gene_id", "hmm_name", "seq_evalue",
+          "dom_evalue", "bitscore", "hmm_coverage", sep=chr(9), file=out)
     for gene_id, hit in sorted(gene_best.items()):
-        out.write(
-            f"{hit['seq_id']}\t{gene_id}\t{hit['hmm_name']}\t"
-            f"{hit['seq_evalue']:.2e}\t{hit['dom_evalue']:.2e}\t"
-            f"{hit['bitscore']:.1f}\t{hit['coverage']:.3f}\n"
+        print(
+            hit['seq_id'], gene_id, hit['hmm_name'],
+            f"{hit['seq_evalue']:.2e}", f"{hit['dom_evalue']:.2e}",
+            f"{hit['bitscore']:.1f}", f"{hit['coverage']:.3f}",
+            sep=chr(9), file=out
         )
 
 n_before  = len(all_hits)
@@ -143,18 +145,19 @@ n_after   = len(candidates)
 n_removed = n_before - n_after
 
 with open("hmmer_filter_summary.txt", "w") as out:
-    out.write("HMMER Filter + Isoform Deduplication Summary\n")
-    out.write("=============================================\n")
-    out.write(f"E-value threshold          : {evalue_thresh}\n")
-    out.write(f"Coverage threshold         : {coverage_thresh}\n")
-    out.write(f"Raw hits passing filters   : {n_before}\n")
-    out.write(f"Isoforms removed           : {n_removed}\n")
-    out.write(f"Unique genes retained      : {n_after}\n")
-    out.write("\nSelection rule: best bitscore per gene ID;\n")
-    out.write("tie-break: lowest e-value, then highest HMM coverage.\n")
+    print("HMMER Filter + Isoform Deduplication Summary", file=out)
+    print("=============================================", file=out)
+    print(f"E-value threshold          : {evalue_thresh}", file=out)
+    print(f"Coverage threshold         : {coverage_thresh}", file=out)
+    print(f"Raw hits passing filters   : {n_before}", file=out)
+    print(f"Isoforms removed           : {n_removed}", file=out)
+    print(f"Unique genes retained      : {n_after}", file=out)
+    print("", file=out)
+    print("Selection rule: best bitscore per gene ID;", file=out)
+    print("tie-break: lowest e-value, then highest HMM coverage.", file=out)
 
 print(f"HMMER: {n_before} hits -> {n_after} unique genes "
       f"({n_removed} isoforms removed)", file=sys.stderr)
-PYEOF
+    PYEOF
     """
 }
