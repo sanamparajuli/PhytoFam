@@ -45,7 +45,7 @@ with open(proteome) as fh, \\
 
 with open(f"{label}_not_found.txt", "w") as out:
     for sid in sorted(not_found):
-        out.write(sid + "\n")
+        out.write(sid + "\\n")
 
 if not_found:
     print(f"WARNING: {len(not_found)} IDs not found in proteome", file=sys.stderr)
@@ -110,34 +110,34 @@ tree_ok     = os.path.exists(treefile) and os.path.getsize(treefile) > 10
 
 with open("final_gene_ids.txt", "w") as out:
     for sid in sorted(final_set):
-        out.write(sid + "\n")
+        out.write(sid + "\\n")
 
 def pct(a, b):
     return f"{a/b*100:.1f}%" if b > 0 else "N/A"
 
 with open("pipeline_summary.txt", "w") as out:
-    out.write("=" * 60 + "\n")
-    out.write("  Gene Family Identification Pipeline -- Summary\n")
-    out.write("=" * 60 + "\n")
-    out.write(f"  Date : {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
-    out.write("  Step                                  Sequences\n")
-    out.write("  " + "-" * 50 + "\n")
-    out.write(f"  1. HMMER (post isoform dedup)       : {n_hmmer:>6}\n")
+    out.write("=" * 60 + "\\n")
+    out.write("  Gene Family Identification Pipeline -- Summary\\n")
+    out.write("=" * 60 + "\\n")
+    out.write(f"  Date : {datetime.now().strftime('%Y-%m-%d %H:%M')}\\n\\n")
+    out.write("  Step                                  Sequences\\n")
+    out.write("  " + "-" * 50 + "\\n")
+    out.write(f"  1. HMMER (post isoform dedup)       : {n_hmmer:>6}\\n")
     out.write(f"  2. InterProScan confirmed           : {n_confirmed:>6}"
-              f" ({pct(n_confirmed, n_hmmer)} retained)\n")
+              f" ({pct(n_confirmed, n_hmmer)} retained)\\n")
     out.write(f"  3. Orthology assigned (no filter)   : {n_final:>6}"
-              f" (= all confirmed)\n")
-    out.write("\n")
-    out.write(f"  Final gene family members           : {n_final}\n")
-    out.write(f"  Phylogenetic tree produced          : {'Yes' if tree_ok else 'No'}\n\n")
-    out.write("  Note: RBH orthology assignments are in\n")
-    out.write("        03_blast/orthology_table.tsv\n\n")
-    out.write("  Output files:\n")
-    out.write("    sequences/final_candidates.fasta\n")
-    out.write("    04_alignment/sequence_manifest.tsv (outgroup flags)\n")
-    out.write("    06_phylogeny/phylogeny.treefile\n")
-    out.write("    final_gene_ids.txt\n")
-    out.write("=" * 60 + "\n")
+              f" (= all confirmed)\\n")
+    out.write("\\n")
+    out.write(f"  Final gene family members           : {n_final}\\n")
+    out.write(f"  Phylogenetic tree produced          : {'Yes' if tree_ok else 'No'}\\n\\n")
+    out.write("  Note: RBH orthology assignments are in\\n")
+    out.write("        03_blast/orthology_table.tsv\\n\\n")
+    out.write("  Output files:\\n")
+    out.write("    sequences/final_candidates.fasta\\n")
+    out.write("    04_alignment/sequence_manifest.tsv (outgroup flags)\\n")
+    out.write("    06_phylogeny/phylogeny.treefile\\n")
+    out.write("    final_gene_ids.txt\\n")
+    out.write("=" * 60 + "\\n")
 
 print("Pipeline complete. See pipeline_summary.txt")
 PYEOF
