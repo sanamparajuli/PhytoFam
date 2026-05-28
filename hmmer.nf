@@ -94,6 +94,7 @@ ISOFORM_PATTERNS = [
     r'^(.+)\\.[tmMpP]\\d+\$',
     r'^(.+)_[TtPpCc]\\d+\$',
     r'^(.+)\\.[a-zA-Z]+\\d+\$',
+    r'^(.+)\\.\\d+\\.[a-zA-Z]+\$',   # new pattern
     r'^(.+)\\.\\d+\$',
     r'^(.+)-\\d+\$',
 ]
