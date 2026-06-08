@@ -46,12 +46,12 @@ Proteome (FASTA)
 | Tool          | Version tested | Install via               |
 |---------------|---------------|---------------------------|
 | Nextflow      | 25.04.2       | `curl -s get.nextflow.io` |
-| HMMER         | 3.4           | bioconda                  |
-| InterProScan  | 5.59_91.0     | bioconda                  |
-| BLAST+        | 2.17.0        | bioconda                  |
-| MUSCLE        | 5.3           | bioconda                  |
-| TrimAl        | 1.5.1         | bioconda                  |
-| IQ-TREE3      | 3.1.2         | bioconda                  |
+| HMMER         | 3.4           | bioconda (pipeline will install)                  |
+| InterProScan  | 5.59_91.0     | local                  |
+| BLAST+        | 2.17.0        | bioconda (pipeline will install)               |
+| MUSCLE        | 5.3           | bioconda (pipeline will install)                 |
+| TrimAl        | 1.5.1         | bioconda (pipeline will install)                |
+| IQ-TREE3      | 3.1.2         | bioconda (pipeline will install)                |
 | Python        | ≥ 3.10        | conda / system            |
 | Biopython     | ≥ 1.83        | bioconda                  |
 
