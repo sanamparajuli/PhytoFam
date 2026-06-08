@@ -119,7 +119,6 @@ nextflow run main.nf -profile slurm,conda \
 | `--reference_db`     | required      | Reference known gene family members FASTA           |
 | `--target_domains`   | required      | Pfam/IPR accessions (comma-separated)               |
 | `--outgroup`         | `null`        | FASTA of outgroup sequence(s) — optional            |
-| `--interpro_db`      | system default| InterProScan local database path                    |
 | `--hmmer_evalue`     | `1e-5`        | E-value cutoff for HMMER                            |
 | `--hmmer_coverage`   | `0.5`         | Min fraction of HMM profile covered                 |
 | `--blast_evalue`     | `1e-5`        | E-value cutoff for BLAST                            |
