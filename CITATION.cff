@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: xyLEM
+title: PhytoFam
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -8,9 +8,9 @@ authors:
   - given-names: Sanam
     family-names: Parajuli
     email: sanam.parajuli@sdstate.edu
-repository-code: 'https://github.com/sanamparajuli/xyLEM'
+repository-code: 'https://github.com/sanamparajuli/PhytoFam'
 keywords:
-  - xyLEM
+  - PhytoFam
   - gene family
 license: OSL-2.1
 version: 1.0
