@@ -100,7 +100,7 @@ nextflow run main.nf \
 ```
 The outgroup sequences are included in the alignment and labelled in
 `04_alignment/sequence_manifest.tsv`. The tree is left **unrooted** by default —
-root it at the outgroup in your preferred viewer (see [Tree visualisation](#tree-visualisation)).
+root it at the outgroup in your preferred viewer.
 
 ### 5. Run on SLURM
 ```bash
