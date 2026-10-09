@@ -20,7 +20,7 @@ Proteome (FASTA)
              ▼
 ┌──────────────────────────┐
 │  3. BLAST RBH            │  orthology ASSIGNMENT only — no sequences removed
-│     (annotation step)    │  labels: RBH_ORTHOLOG / PUTATIVE_HOMOLOG / NO_BLAST_HIT
+│     (annotation step)    │  labels: RBH_2way / RBH_1way / NO_BLAST
 └────────────┬─────────────┘
              │ all confirmed candidates (+ orthology annotations)
              ▼
@@ -150,9 +150,9 @@ BLAST result. Each sequence receives one of three labels in
 
 | Label              | Meaning                                             |
 |--------------------|-----------------------------------------------------|
-| `RBH_ORTHOLOG`     | Strict reciprocal best hit with a reference member  |
-| `PUTATIVE_HOMOLOG` | Significant forward hit to reference, but no RBH    |
-| `NO_BLAST_HIT`     | No significant BLAST hit (possible lineage-specific)|
+| `RBH_2way`         | Strict reciprocal best hit with a reference member  |
+| `RBH_1way`         | Significant forward hit to reference, but no RBH    |
+| `NO_BLAST`         | No significant BLAST hit (possible lineage-specific)|
 
 ### Outgroup handling (Steps 4–6)
 If `--outgroup` is provided, outgroup sequences are merged into the alignment
@@ -177,7 +177,7 @@ results/
 ├── 03_blast/
 │   ├── blast_forward.tsv
 │   ├── blast_reverse.tsv
-│   ├── orthology_table.tsv         ← RBH_ORTHOLOG / PUTATIVE_HOMOLOG / NO_BLAST_HIT
+│   ├── orthology_table.tsv         ← RBH_2way / RBH_1way / NO_BLAST
 │   └── rbh_pairs.tsv
 ├── 04_alignment/
 │   ├── combined_aligned.fasta
