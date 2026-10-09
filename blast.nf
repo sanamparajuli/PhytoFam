@@ -150,13 +150,13 @@ for seq_id in all_ids:
         is_rbh = (ref_hit in rev and rev[ref_hit]['sid'] == seq_id)
 
         if is_rbh:
-            orthology_type = "RBH_ORTHOLOG"
+            orthology_type = "RBH_2way"
             rev_eval = rev[ref_hit]['evalue']
             rev_pid  = rev[ref_hit]['pident']
             rbh_pairs.append((seq_id, ref_hit, fwd_eval, fwd_pid,
                               fwd_cov, rev_eval, rev_pid))
         else:
-            orthology_type = "PUTATIVE_HOMOLOG"
+            orthology_type = "RBH_1way"
             rev_eval = rev.get(ref_hit, {}).get('evalue', 'NA')
             rev_pid  = rev.get(ref_hit, {}).get('pident', 'NA')
 
@@ -168,7 +168,7 @@ for seq_id in all_ids:
         ))
     else:
         orthology_rows.append((
-            seq_id, "NO_BLAST_HIT", "NA", "NA", "NA", "NA", "NA", "NA"
+            seq_id, "NO_BLAST", "NA", "NA", "NA", "NA", "NA", "NA"
         ))
 
 with open("all_confirmed_ids.txt", "w") as out:
@@ -196,16 +196,16 @@ with open("rbh_summary.txt", "w") as out:
     print("RBH Orthology Assignment Summary", file=out)
     print("=================================", file=out)
     print(f"Total sequences (all pass downstream) : {len(all_ids)}", file=out)
-    print(f"  RBH orthologs                       : {type_counts['RBH_ORTHOLOG']}", file=out)
-    print(f"  Putative homologs (fwd hit only)    : {type_counts['PUTATIVE_HOMOLOG']}", file=out)
-    print(f"  No significant BLAST hit            : {type_counts['NO_BLAST_HIT']}", file=out)
+    print(f"  RBH_2way (reciprocal best hit)      : {type_counts['RBH_2way']}", file=out)
+    print(f"  RBH_1way (forward hit only)         : {type_counts['RBH_1way']}", file=out)
+    print(f"  NO_BLAST (no significant hit)       : {type_counts['NO_BLAST']}", file=out)
     print("", file=out)
     print("Note: ALL sequences proceed to alignment/phylogenetics.", file=out)
     print("Orthology assignments are annotations only.", file=out)
 
-print(f"Orthology: {type_counts['RBH_ORTHOLOG']} RBH, "
-      f"{type_counts['PUTATIVE_HOMOLOG']} putative, "
-      f"{type_counts['NO_BLAST_HIT']} no-hit -- all {len(all_ids)} proceed",
+print(f"Orthology: {type_counts['RBH_2way']} RBH_2way, "
+      f"{type_counts['RBH_1way']} RBH_1way, "
+      f"{type_counts['NO_BLAST']} NO_BLAST -- all {len(all_ids)} proceed",
       file=sys.stderr)
 PYEOF
     """
