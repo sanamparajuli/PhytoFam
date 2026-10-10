@@ -19,10 +19,10 @@ Proteome (FASTA)
              │ confirmed candidates
              ▼
 ┌──────────────────────────┐
-│  3. BLAST RBH            │  orthology ASSIGNMENT only — no sequences removed
+│  3. BLAST RBH            │  RBH ASSIGNMENT only — no sequences removed
 │     (annotation step)    │  labels: RBH_2way / RBH_1way / NO_BLAST
 └────────────┬─────────────┘
-             │ all confirmed candidates (+ orthology annotations)
+             │ all confirmed candidates (+ RBH annotations)
              ▼
 ┌──────────────────────────┐
 │  4. MUSCLE v5            │  multiple sequence alignment
