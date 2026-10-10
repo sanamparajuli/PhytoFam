@@ -142,7 +142,7 @@ isoform with the **highest bitscore** (tie-break: lowest E-value, then highest
 HMM coverage). The selected representative and its gene ID are recorded in
 `01_hmmer/hmmer_filtered.tsv`.
 
-### RBH as orthology annotation (Step 3)
+### RBH annotation (Step 3)
 BLAST reciprocal best hits are used to **annotate** sequences, not filter them.
 Every sequence confirmed by InterProScan proceeds to alignment regardless of its
 BLAST result. Each sequence receives one of three labels in
