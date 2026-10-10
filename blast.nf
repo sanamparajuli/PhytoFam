@@ -89,7 +89,7 @@ process RBH_ORTHOLOGY {
 
     output:
     path "all_confirmed_ids.txt", emit: all_ids
-    path "orthology_table.tsv",   emit: orthology
+    path "rbh_table.tsv",   emit: orthology
     path "rbh_pairs.tsv",         emit: rbh_pairs
     path "rbh_summary.txt",       emit: summary
 
@@ -175,7 +175,7 @@ with open("all_confirmed_ids.txt", "w") as out:
     for sid in all_ids:
         print(sid, file=out)
 
-with open("orthology_table.tsv", "w") as out:
+with open("rbh_table.tsv", "w") as out:
     print("seq_id", "orthology_type", "best_ref_hit",
           "fwd_evalue", "fwd_pident", "fwd_qcovs",
           "rev_evalue", "rev_pident", sep=chr(9), file=out)
@@ -193,7 +193,7 @@ for row in orthology_rows:
     type_counts[row[1]] += 1
 
 with open("rbh_summary.txt", "w") as out:
-    print("RBH Orthology Assignment Summary", file=out)
+    print("RBH Assignment Summary", file=out)
     print("=================================", file=out)
     print(f"Total sequences (all pass downstream) : {len(all_ids)}", file=out)
     print(f"  RBH_2way (reciprocal best hit)      : {type_counts['RBH_2way']}", file=out)
@@ -201,7 +201,7 @@ with open("rbh_summary.txt", "w") as out:
     print(f"  NO_BLAST (no significant hit)       : {type_counts['NO_BLAST']}", file=out)
     print("", file=out)
     print("Note: ALL sequences proceed to alignment/phylogenetics.", file=out)
-    print("Orthology assignments are annotations only.", file=out)
+    print("RBH assignments are annotations only.", file=out)
 
 print(f"Orthology: {type_counts['RBH_2way']} RBH_2way, "
       f"{type_counts['RBH_1way']} RBH_1way, "
